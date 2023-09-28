@@ -24,7 +24,8 @@ const formSchema = z.object({
     message: "Title is required",
   }),
 });
-
+// URbTlFSEOmQe4PNr
+// mongodb+srv://suvrajitmondal53325:<password>@cluster0.8widttc.mongodb.net/?retryWrites=true&w=majority
 const CreatePage = () => {
   const router = useRouter();
 
@@ -38,8 +39,10 @@ const CreatePage = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await axios.post("/api/course", values);
-      router.push(`teacher/courses/${response.data.id}`);
+      const response = await axios.post("/api/courses", values);
+      console.log(response)
+      router.push(`courses/${response.data.id}`);
+      toast.success("Course created")
     } catch {
       toast.error("Something went wrong while submitting");
     }
