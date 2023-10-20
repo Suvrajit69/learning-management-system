@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 
 import TitleForm from "./_components/titleForm";
 import DescriptionForm from "./_components/descriptionForm";
+import ImageForm from "./_components/imageForm";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const userId = auth();
@@ -47,6 +48,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                 </div>
                 <TitleForm initialData={course} courseId={course.id}/>
                 <DescriptionForm initialData={course} courseId={course.id}/>
+                <ImageForm initialData={course} courseId={course.id}/>
             </div>
         </div>
     </section>

@@ -23,11 +23,10 @@ import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 
 import { useRouter } from "next/navigation";
+import { Course } from "@prisma/client";
 
 interface DescriptionFormProps {
-  initialData: {
-    description: string;
-  };
+  initialData: Course;
   courseId: string;
 }
 const formSchema = z.object({
@@ -42,7 +41,9 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues:{
+      description: initialData?.description || "",
+    },
   });
 
   const { isSubmitting, isValid } = form.formState;
