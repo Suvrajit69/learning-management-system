@@ -38,7 +38,7 @@ const CategoryForm = ({
   courseId,
   options,
 }: CategoryFormProps) => {
-  console.log(options);
+  // console.log(options);
   const router = useRouter();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -55,7 +55,6 @@ const CategoryForm = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
-      console.log(values);
       toast.success("Course updated");
       toggleEdit();
       router.refresh();

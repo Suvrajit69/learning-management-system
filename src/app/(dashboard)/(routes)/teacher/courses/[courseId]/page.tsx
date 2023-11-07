@@ -1,7 +1,12 @@
 import { IconBadge } from "@/components/iconBadge";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
-import { CircleDollarSign, LayoutDashboard, ListChecks } from "lucide-react";
+import {
+  CircleDollarSign,
+  File,
+  LayoutDashboard,
+  ListChecks,
+} from "lucide-react";
 import { redirect } from "next/navigation";
 
 import TitleForm from "./_components/titleForm";
@@ -9,6 +14,7 @@ import DescriptionForm from "./_components/descriptionForm";
 import ImageForm from "./_components/imageForm";
 import CategoryForm from "./_components/categoryForm";
 import PriceForm from "./_components/priceForm";
+import AttachmentForm from "./_components/attachmentForm";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const userId = auth();
@@ -17,6 +23,13 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
+    },
+    include:{
+      attachments:{
+        orderBy:{
+          createdAt: "desc",
+        },
+      },
     },
   });
 
@@ -78,12 +91,17 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
             <div>TODO: Chapters</div>
           </div>
           <div className="flex items-center gap-x-2">
-            <IconBadge icon={CircleDollarSign}/>
-            <h2 className="text-xl">
-              Sell your course
-            </h2>
+            <IconBadge icon={CircleDollarSign} />
+            <h2 className="text-xl">Sell your course</h2>
           </div>
-          <PriceForm initialData={course} courseId={course.id}/>
+          <PriceForm initialData={course} courseId={course.id} />
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={File} />
+              <h2 className="text-xl">Resources & Attachments</h2>
+            </div>
+          <AttachmentForm initialData={course} courseId={course.id} />
+          </div>
         </div>
       </div>
     </section>
