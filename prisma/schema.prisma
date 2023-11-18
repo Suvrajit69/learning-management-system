@@ -57,7 +57,7 @@ model Chapter {
   isPublised  Boolean @default(false)
   isFree      Boolean @default(false)
 
-  musData MuxData?
+  muxData MuxData?
 
   courseId String @db.ObjectId
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
