@@ -22,20 +22,22 @@ import { Pencil } from "lucide-react";
 
 import { useRouter } from "next/navigation";
 
-interface TitleFormProps {
+interface ChapterTitleFormProps {
   initialData: {
     title: string;
   };
   courseId: string;
+  chapterId: string;
 }
 
 const formSchema = z.object({
-  title: z.string().min(1, {
-    message: "Title is required",
-  }),
+  title: z.string().min(1),
 });
-const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
-
+const ChapterTitleForm = ({
+  initialData,
+  courseId,
+  chapterId,
+}: ChapterTitleFormProps) => {
   const router = useRouter();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -44,16 +46,19 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
   });
-  
+
   const { isSubmitting, isValid } = form.formState;
-  
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${courseId}`, values);
-      // console.log(values)
-      toast.success("Course updated");
+      await axios.patch(
+        `/api/courses/${courseId}/chapters/${chapterId}`,
+        values
+      );
+      //   console.log(values);
+      toast.success("Chapter updated");
       toggleEdit();
-      router.refresh()
+      router.refresh();
     } catch (error) {
       toast.error("Somethig went wrong");
     }
@@ -64,7 +69,7 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course Title
+        Chapter Title
         <Button variant="ghost" onClick={toggleEdit}>
           {isEditing ? (
             <>Cancel</>
@@ -91,7 +96,7 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
-                      placeholder="e.g. 'Advance Web development'"
+                      placeholder="e.g. 'introduction to the course'"
                       {...field}
                     />
                   </FormControl>
@@ -109,4 +114,4 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   );
 };
 
-export default TitleForm;
+export default ChapterTitleForm;
