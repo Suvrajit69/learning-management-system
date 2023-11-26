@@ -56,7 +56,7 @@ const ChapterAccessForm = ({
         `/api/courses/${courseId}/chapters/${chapterId}`,
         values
       );
-      console.log(values);
+      // console.log(values);
       toast.success("Chapter updated");
       toggleEdit();
       router.refresh();
