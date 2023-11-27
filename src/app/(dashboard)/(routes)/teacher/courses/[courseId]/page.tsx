@@ -18,7 +18,7 @@ import AttachmentForm from "./_components/attachmentForm";
 import ChapterForm from "./_components/chapterForm";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
-  const {userId} = auth();
+  const { userId } = auth();
   if (!userId) return redirect("/");
 
   const course = await db.course.findUnique({
@@ -27,10 +27,10 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       userId,
     },
     include: {
-      chapters:{
+      chapters: {
         orderBy: {
-          position: "asc"
-        }
+          position: "asc",
+        },
       },
       attachments: {
         orderBy: {
@@ -54,7 +54,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     course.imageUrl,
     course.price,
     course.categoryId,
-    course.chapters.some(chapter => chapter.isPublised)
+    course.chapters.some((chapter) => chapter.isPublised),
   ];
 
   const totalFields = requiredField.length;

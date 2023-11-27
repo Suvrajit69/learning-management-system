@@ -76,10 +76,10 @@ const ChapterForm = ({ initialData, courseId }: ChapterFormProps) => {
       setIsUpdating(false);
     }
   };
-  
-  const onEdit =(chapterId: string)=>{
-    router.push(`/teacher/courses/${courseId}/chapters/${chapterId}`)
-  }
+
+  const onEdit = (chapterId: string) => {
+    router.push(`/teacher/courses/${courseId}/chapters/${chapterId}`);
+  };
 
   return (
     <div className="relative mt-6 border bg-slate-100 rounded-md p-4">
@@ -89,7 +89,7 @@ const ChapterForm = ({ initialData, courseId }: ChapterFormProps) => {
         </div>
       )}
       <div className="font-medium flex items-center justify-between">
-        Course Description
+        Course Chapters
         <Button variant="ghost" onClick={toggleCreating}>
           {isCreating ? (
             <>Cancel</>
