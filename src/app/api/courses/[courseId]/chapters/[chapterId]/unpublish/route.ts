@@ -42,11 +42,10 @@ export async function PATCH(
       },
     });
 
-    if (!publishedChaptersInCourse) {
-      db.course.update({
+    if (!publishedChaptersInCourse.length) {
+      await db.course.update({
         where: {
           id: params.courseId,
-          isPublished: false,
         },
         data: {
           isPublished: false,
