@@ -15,8 +15,8 @@ const CategoryItem = ({ label, value }: CtegoryItemProps) => {
   const searchParams = useSearchParams();
 
   const currentCategoryId = searchParams.get("categoryId");
-  // const currentTitle = searchParams.get("title");
- //  console.log(currentTitle)
+  const currentTitle = searchParams.get("title");
+  // console.log(currentTitle)
   const isSelected = currentCategoryId === value;
 
   const onClick = () => {
@@ -24,7 +24,7 @@ const CategoryItem = ({ label, value }: CtegoryItemProps) => {
       {
         url: pathname,
         query: {
-          // title: currentTitle,
+          title: currentTitle,
           categoryId: isSelected ? null : value,
         },
       },
