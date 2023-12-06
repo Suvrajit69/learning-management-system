@@ -2,6 +2,8 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
+import { utapi } from "@/app/api/uploadthing/core";
+
 export const DELETE = async (
   req: Request,
   { params }: { params: { courseId: string; chapterId: string } }
@@ -41,6 +43,12 @@ export const DELETE = async (
         id: params.chapterId,
       },
     });
+
+    if (deletedChapter.videoUrl) {
+      const videoFileKey = deletedChapter.videoUrl.slice(18);
+      console.log(videoFileKey);
+      await utapi.deleteFiles(videoFileKey);
+    }
 
     const publishedChaptersInCourse = await db.chapter.findMany({
       where: {
@@ -86,6 +94,21 @@ export async function PATCH(
 
     if (!courseOwner) {
       return new NextResponse("Unauthorize", { status: 401 });
+    }
+
+    const existingVideoUrl = await db.chapter.findUnique({
+      where: {
+        id: params.chapterId,
+        courseId: params.courseId,
+      },
+      select: {
+        videoUrl: true,
+      },
+    });
+
+    if (existingVideoUrl?.videoUrl) {
+      const videoFileKey = existingVideoUrl.videoUrl.slice(18);
+      await utapi.deleteFiles(videoFileKey);
     }
 
     const chapter = await db.chapter.update({
