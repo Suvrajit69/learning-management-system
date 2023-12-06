@@ -2,6 +2,8 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
+import { utapi } from "../../uploadthing/core";
+
 export async function PATCH(
   req: Request,
   { params }: { params: { courseId: string } }
@@ -14,6 +16,21 @@ export async function PATCH(
 
     const { courseId } = params;
     const values = await req.json();
+
+    const existingImageUrl = await db.course.findUnique({
+      where: {
+        id: courseId,
+        userId: userId,
+      },
+      select: {
+        imageUrl: true,
+      },
+    });
+
+    if (existingImageUrl?.imageUrl) {
+      const imageFileKey = existingImageUrl.imageUrl.slice(18);
+      await utapi.deleteFiles(imageFileKey);
+    }
 
     const course = await db.course.update({
       where: {
@@ -53,12 +70,33 @@ export const DELETE = async (
     if (!courseOwner) {
       return new NextResponse("Unauthorize courseOwner", { status: 401 });
     }
-console.log(params.courseId)
+
     const deletedCourse = await db.course.delete({
       where: {
         id: params.courseId,
       },
+      include: {
+        attachments: true,
+        chapters: true,
+      },
     });
+
+    if (deletedCourse.imageUrl) {
+      const imageFileKey = deletedCourse.imageUrl.slice(18);
+      await utapi.deleteFiles(imageFileKey);
+    }
+    if (deletedCourse.attachments.length !== 0) {
+      deletedCourse.attachments.map((attchment) => {
+        const attFileKey = attchment.url.slice(18);
+        utapi.deleteFiles(attFileKey);
+      });
+    }
+    if (deletedCourse.chapters.length !== 0) {
+      deletedCourse.chapters.map((chapter) => {
+        const videoFileKey = chapter.videoUrl?.slice(18);
+        utapi.deleteFiles(videoFileKey!);
+      });
+    }
 
     return NextResponse.json(deletedCourse);
   } catch (error) {
