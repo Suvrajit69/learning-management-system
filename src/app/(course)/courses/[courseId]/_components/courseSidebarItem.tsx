@@ -21,12 +21,12 @@ const CourseSidebarItem = ({
 }: CourseSidebarItemProps) => {
   const pathName = usePathname();
   const router = useRouter();
-  console.log(isLocked);
+
   const Icon = isLocked ? Lock : isCompleted ? CheckCircle : PlayCircle;
   const isActive = pathName?.includes(id);
 
   const onClick = () => {
-    router.push(`/course/${courseId}/chapters/${id}`);
+    router.push(`/courses/${courseId}/chapters/${id}`);
   };
 
   return (
@@ -34,7 +34,7 @@ const CourseSidebarItem = ({
       onClick={onClick}
       type="button"
       className={cn(
-        "flex, items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:bg-slate-300/20",
+        "flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:bg-slate-300/20",
         isActive &&
           "text-slate-700 bg-slate-200/20 hover:bg-slate-200/20 hover:text-slate-700",
         isCompleted && "text-emerald-700 hover:text-emerald-700",
@@ -58,7 +58,7 @@ const CourseSidebarItem = ({
           isActive && "opacity-100",
           isCompleted && "border-emerald-700"
         )}
-      ></div>
+      />
     </button>
   );
 };

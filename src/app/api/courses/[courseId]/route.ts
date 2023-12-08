@@ -28,8 +28,10 @@ export async function PATCH(
     });
 
     if (existingImageUrl?.imageUrl) {
-      const imageFileKey = existingImageUrl.imageUrl.slice(18);
-      await utapi.deleteFiles(imageFileKey);
+      if(values.imageUrl){
+        const imageFileKey = existingImageUrl.imageUrl.slice(18);
+        await utapi.deleteFiles(imageFileKey);
+      }
     }
 
     const course = await db.course.update({

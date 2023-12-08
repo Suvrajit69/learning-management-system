@@ -96,19 +96,20 @@ export async function PATCH(
       return new NextResponse("Unauthorize", { status: 401 });
     }
 
-    const existingVideoUrl = await db.chapter.findUnique({
-      where: {
-        id: params.chapterId,
-        courseId: params.courseId,
-      },
-      select: {
-        videoUrl: true,
-      },
-    });
-
-    if (existingVideoUrl?.videoUrl) {
-      const videoFileKey = existingVideoUrl.videoUrl.slice(18);
-      await utapi.deleteFiles(videoFileKey);
+    if (values.videoUrl) {
+      const existingVideoUrl = await db.chapter.findUnique({
+        where: {
+          id: params.chapterId,
+          courseId: params.courseId,
+        },
+        select: {
+          videoUrl: true,
+        },
+      });
+      if (existingVideoUrl?.videoUrl) {
+        const videoFileKey = existingVideoUrl.videoUrl.slice(18);
+        await utapi.deleteFiles(videoFileKey);
+      }
     }
 
     const chapter = await db.chapter.update({
