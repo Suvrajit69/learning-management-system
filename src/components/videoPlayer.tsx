@@ -4,9 +4,10 @@ import ReactPlayer from "react-player/lazy";
 
 interface VideoProps {
   videoUrl: string;
+  onEnded: ()=> void
 }
 
-const VideoPlayer = ({ videoUrl }: VideoProps) => {
+const VideoPlayer = ({ videoUrl, onEnded }: VideoProps) => {
   const [isMounted, setIsMounted] = useState(false);
   
   useEffect(() => {
@@ -18,6 +19,7 @@ const VideoPlayer = ({ videoUrl }: VideoProps) => {
   return (
     <ReactPlayer
       url={videoUrl}
+      onEnded={onEnded}
       controls
       download={false}
       width={"100%"}

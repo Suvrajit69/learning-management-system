@@ -11,6 +11,9 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
         where: {
           isPublised: true,
         },
+        orderBy:{
+          position: "asc",
+        }
       },
     },
   });

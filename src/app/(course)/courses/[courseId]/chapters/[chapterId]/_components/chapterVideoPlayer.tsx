@@ -29,6 +29,32 @@ const ChapterVideoPlayer = ({
   title,
 }: ChapterVideoPlayerProps) => {
   // const [isReady, setIsReady] = useState(false);
+  const router = useRouter();
+  const confetti = useConfettiStore();
+
+  const onEnd = async () => {
+    try {
+      if (completeOnEnd) {
+        await axios.put(
+          `/api/courses/${courseId}/chapters/${chapterId}/progress/`,
+          {
+            isCompleted: true,
+          }
+        );
+        if (!nextChapterId) {
+          confetti.onOpen();
+        }
+        toast.success("progress updated");
+        router.refresh();
+
+        if (nextChapterId) {
+          router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
+        }
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  };
   // console.log(videoUrl)
   return (
     <div className="relative aspect-video">
@@ -44,7 +70,7 @@ const ChapterVideoPlayer = ({
         </div>
       )}
       {/* <div className={cn(!isReady && "hidden")}> */}
-        {!isLocked && <VideoPlayer videoUrl={videoUrl} />}
+      {!isLocked && <VideoPlayer videoUrl={videoUrl} onEnded={onEnd} />}
       {/* </div> */}
     </div>
   );
