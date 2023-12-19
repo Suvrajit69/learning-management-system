@@ -3,7 +3,6 @@ import Categories from "./_components/categories";
 import SearchInput from "@/components/searchInput";
 import { getCourses } from "../../../../../actions/getCourses";
 import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
 import CoursesList from "@/components/coursesList";
 
 interface SearchPageProps {
@@ -16,10 +15,7 @@ interface SearchPageProps {
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const { userId } = auth();
 
-  if (!userId) {
-    return redirect("/");
-  }
-// console.log(searchParams);
+  // console.log(searchParams);
   const categories = await db.category.findMany({
     orderBy: {
       name: "asc",
@@ -38,7 +34,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
       </div>
       <div className="p-6 space-y-4">
         <Categories items={categories} />
-        <CoursesList items={courses}/>
+        <CoursesList items={courses} />
       </div>
     </>
   );

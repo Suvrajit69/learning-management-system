@@ -10,7 +10,7 @@ type CourseWithProgressWithCategory = Course & {
 };
 
 type GetCourses = {
-  userId: string;
+  userId: string | null;
   title?: string;
   categoryId: string;
 };
@@ -21,6 +21,42 @@ export const getCourses = async ({
   categoryId,
 }: GetCourses): Promise<CourseWithProgressWithCategory[]> => {
   try {
+    if (!userId) {
+      const courses = await db.course.findMany({
+        where: {
+          isPublished: true,
+          title: {
+            contains: title,
+          },
+          categoryId,
+        },
+        include: {
+          category: true,
+          chapters: {
+            where: {
+              isPublised: true,
+            },
+            select: {
+              id: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+
+      const CourseWithProgress: CourseWithProgressWithCategory[] =
+        await Promise.all(
+          courses.map(async (course) => {
+            return {
+              ...course,
+              progress: null,
+            };
+          })
+        );
+      return CourseWithProgress;
+    }
     const courses = await db.course.findMany({
       where: {
         isPublished: true,
