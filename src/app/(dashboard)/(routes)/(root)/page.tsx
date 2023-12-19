@@ -1,37 +1,47 @@
+import { db } from "@/lib/db";
+import Categories from "./_components/categories";
+import SearchInput from "@/components/searchInput";
+import { getCourses } from "../../../../../actions/getCourses";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { getDashboardCourses } from "../../../../../actions/getDashboardCourses";
 import CoursesList from "@/components/coursesList";
-import { CheckCircle, Clock } from "lucide-react";
-import InfoCard from "./_components/infoCard";
 
-export default async function Dashboard() {
+interface SearchPageProps {
+  searchParams: {
+    title: string;
+    categoryId: string;
+  };
+}
+
+const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const { userId } = auth();
 
   if (!userId) {
     return redirect("/");
   }
+// console.log(searchParams);
+  const categories = await db.category.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
 
-  const { completedCourses, coursesInProgress } = await getDashboardCourses(
-    userId
-  );
+  const courses = await getCourses({
+    userId,
+    ...searchParams,
+  });
 
   return (
-    <div className="p-6 space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <InfoCard
-          icon={Clock}
-          label={"In Progress"}
-          numberOfItems={coursesInProgress.length}
-        />
-        <InfoCard
-          icon={CheckCircle}
-          label={"Completed"}
-          numberOfItems={completedCourses.length}
-          variant="success"
-        />
+    <>
+      <div className="px-6 pt-6 md:hidden md:mb-0 block">
+        <SearchInput />
       </div>
-      <CoursesList items={[...coursesInProgress, ...completedCourses]} />
-    </div>
+      <div className="p-6 space-y-4">
+        <Categories items={categories} />
+        <CoursesList items={courses}/>
+      </div>
+    </>
   );
-}
+};
+
+export default SearchPage;

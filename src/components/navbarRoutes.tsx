@@ -11,11 +11,11 @@ const NavbarRoutes = () => {
 
   const isTeacherPage = pathname?.startsWith("/teacher");
   const isCoursePage = pathname?.includes("/courses");
-  const isSearchPage = pathname === "/search";
+  const isHomePage = pathname === "/";
 
   return (
     <>
-      {isSearchPage && (
+      {isHomePage && (
         <div className="hidden md:block">
           <SearchInput />
         </div>

@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import { getAnalytics } from "../../../../../../actions/getAnalytics";
 import DataCard from "./_components/dataCard";
-import Chart from "../../(root)/_components/chart";
+import Chart from "../../dashboard/_components/chart";
 
 const AnalyticsPage = async () => {
   const { userId } = auth();
