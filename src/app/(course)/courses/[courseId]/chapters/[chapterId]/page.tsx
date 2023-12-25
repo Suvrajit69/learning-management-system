@@ -8,6 +8,8 @@ import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
 import { File } from "lucide-react";
 import CourseProgressBtn from "./_components/courseProgressBtn";
+import CourseRatingBtn from "./_components/courseRatingBtn";
+import { db } from "@/lib/db";
 
 const ChapterIdPage = async ({
   params,
@@ -26,6 +28,13 @@ const ChapterIdPage = async ({
       chapterId: params.chapterId,
       courseId: params.courseId,
     });
+
+  const ratingReview = await db.courseRating.findFirst({
+    where: {
+      userId: userId,
+      courseId: params.courseId,
+    },
+  });
 
   if (!chapter || !course) {
     return redirect("/");
@@ -61,12 +70,19 @@ const ChapterIdPage = async ({
           <div className="p-4 flex flex-col md:flex-row items-center justify-between">
             <h2 className="text-2xl font-semibold mb-2">{chapter.title}</h2>
             {purchase ? (
-              <CourseProgressBtn
-                chapterId={params.chapterId}
-                courseId={params.courseId}
-                nextChapterId={nextChapter?.id}
-                isCompleted={!!userProgress?.isCompleted}
-              />
+              <div className="flex gap-2 items-center">
+                <CourseRatingBtn
+                  courseId={params.courseId}
+                  rating={ratingReview?.rating!}
+                  review={ratingReview?.review!}
+                />
+                <CourseProgressBtn
+                  chapterId={params.chapterId}
+                  courseId={params.courseId}
+                  nextChapterId={nextChapter?.id}
+                  isCompleted={!!userProgress?.isCompleted}
+                />
+              </div>
             ) : (
               <CourseEnrollBtn
                 courseId={params.courseId}

@@ -24,7 +24,7 @@ const ConfirmModal = ({ children, onConfirm }: ConfirmModalProps) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone
+            You really want to delete this course?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

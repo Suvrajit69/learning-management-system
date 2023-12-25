@@ -20,12 +20,13 @@ model Course {
   categoryId String?   @db.ObjectId
   category   Category? @relation(fields: [categoryId], references: [id])
 
-  chapters Chapter[]
+  chapters    Chapter[]
   attachments Attachment[]
-  purchases Purchase[]
-
-  createdAt DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  purchases   Purchase[]
+  ratings     CourseRating[]
+  
+  createdAt   DateTime       @default(now())
+  updateAt    DateTime       @updatedAt
 
   // @@index([categoryId])
 }
@@ -88,12 +89,12 @@ model UserProgress {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  // @@index([chapterId])
 
   @@unique([userId, chapterId])
-  // @@index([chapterId])
 }
 
-model Purchase{
+model Purchase {
   id     String @id @default(auto()) @map("_id") @db.ObjectId
   userId String
 
@@ -106,11 +107,24 @@ model Purchase{
   @@unique([userId, courseId])
 }
 
-model StripeCustomer{
- id     String @id @default(auto()) @map("_id") @db.ObjectId
- userId String @unique
- stripeCustomerId String @unique
+model StripeCustomer {
+  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String @unique
+  stripeCustomerId String @unique
 
- createdAt DateTime @default(now())
- updatedAt DateTime @updatedAt 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CourseRating {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  courseId  String   @db.ObjectId
+  course    Course   @relation(fields: [courseId], references: [id])
+  userId    String
+  rating    Float
+  review    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, courseId, review])
 }
