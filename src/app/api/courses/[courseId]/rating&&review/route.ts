@@ -8,22 +8,47 @@ export async function POST(
 ) {
   try {
     const { userId } = auth();
-
+    const { courseId } = params;
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
     const values = await req.json();
 
-    const rating = await db.courseRating.create({
-      data: {
-        courseId: params.courseId,
-        userId: userId,
-        ...values,
+    const existingRatingReview = await db.courseRating.findUnique({
+      where: {
+        userId_courseId: {
+          userId,
+          courseId,
+        },
       },
     });
+    
+    if (!existingRatingReview) {
+      const newRatingReview = await db.courseRating.create({
+        data: {
+          userId: userId,
+          courseId: params.courseId,
+          ...values,
+        },
+      });
+      return NextResponse.json(newRatingReview);
 
-    return NextResponse.json(rating);
+    } else {
+      const updatedRatingReview = await db.courseRating.update({
+        where: {
+          userId_courseId: {
+            userId: userId,
+            courseId: params.courseId,
+          },
+        },
+        data: {
+          ...values,
+        },
+      });
+      return NextResponse.json(updatedRatingReview);
+    }
+    
   } catch (error) {
     console.log("[COURSE_RATING]", error);
     return new NextResponse("Internal Error", { status: 500 });

@@ -20,7 +20,9 @@ const CourseRatingBtn = ({
       initialRating={rating}
       initialReview={review}
     >
-      <Button variant="secondary">Rate this course</Button>
+      <Button variant="secondary">
+        {rating ? "Edit rating" : "Rate this course"}
+      </Button>
     </RatingModal>
   );
 };

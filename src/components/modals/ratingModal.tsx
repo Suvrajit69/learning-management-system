@@ -113,7 +113,7 @@ const RatingModal = ({
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction
                 type="submit"
-                disabled={ratingValue.rating ? false : true}
+                disabled={ratingValue.rating ? false : true || isValid}
               >
                 Continue
               </AlertDialogAction>
