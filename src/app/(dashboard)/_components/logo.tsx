@@ -1,7 +1,11 @@
-import Image from "next/image";
-
 const Logo = () => {
-    return ( <Image height={10} width={100} alt="logo" src="/next.svg"/> );
-}
- 
+  return (
+    <h1 className="flex">
+      <span className="text-blue-800 font-bold text-2xl">
+        CourseLala<span className="text-blue-500 text-xs">.com</span>
+      </span>
+    </h1>
+  );
+};
+
 export default Logo;
