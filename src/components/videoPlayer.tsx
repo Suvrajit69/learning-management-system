@@ -4,7 +4,7 @@ import ReactPlayer from "react-player/lazy";
 
 interface VideoProps {
   videoUrl: string;
-  onEnded: ()=> void
+  onEnded?: ()=> void
 }
 
 const VideoPlayer = ({ videoUrl, onEnded }: VideoProps) => {
