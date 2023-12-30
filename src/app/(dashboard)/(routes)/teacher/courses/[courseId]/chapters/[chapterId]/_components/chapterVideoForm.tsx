@@ -4,9 +4,6 @@ import { useState } from "react";
 import * as z from "zod";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useForm } from "react-hook-form";
-
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
 import { Pencil, PlusCircle, Video } from "lucide-react";
@@ -34,13 +31,6 @@ const ChapterVideoForm = ({
   const router = useRouter();
 
   const [isEditing, setIsEditing] = useState(false);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      videoUrl: initialData?.videoUrl || "",
-    },
-  });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -85,8 +75,8 @@ const ChapterVideoForm = ({
             <Video className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
-          <div className="relative aspect-video mt-2">Video uploaded!
-          <VideoPlayer videoUrl={initialData.videoUrl}/>
+          <div className="relative aspect-video mt-2">
+            <VideoPlayer videoUrl={initialData.videoUrl} />
           </div>
         ))}
       {isEditing && (
@@ -100,7 +90,7 @@ const ChapterVideoForm = ({
             }}
           />
           <div className="text-xs text-muted-foreground mt-4">
-            Upload the chapter's video
+            Upload the chapter video
           </div>
         </div>
       )}
