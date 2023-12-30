@@ -20,7 +20,12 @@ const sizeByVariant = {
 const CourseProgress = ({ variant, size, value }: CourseProgressProps) => {
   return (
     <div>
-      <Progress className="h-2" value={value} variant={variant} />
+      <Progress
+        className="h-2"
+        value={value}
+        variant={variant}
+        aria-label="progress"
+      />
       <p
         className={cn(
           "font-medium mt-2 text-sky-700",

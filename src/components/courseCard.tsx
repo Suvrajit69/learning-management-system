@@ -53,10 +53,10 @@ const CourseCard = async ({
         <div className="relative w-full aspect-video rounded-md overflow-hidden">
           <Image
             fill
-            className="object-cover"
+            className="aspect-square"
             sizes="(min-width: 808px) 50vw, 100vw"
             alt={title}
-            // placeholder="blur"
+            priority
             src={imageUrl}
           />
         </div>
