@@ -2,7 +2,7 @@ const Logo = () => {
   return (
     <h1 className="flex">
       <span className="text-blue-800 font-bold text-2xl">
-        CourseLala<span className="text-blue-500 text-xs">.com</span>
+        CoursesLala<span className="text-blue-500 text-xs">.com</span>
       </span>
     </h1>
   );

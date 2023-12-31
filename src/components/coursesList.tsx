@@ -1,5 +1,5 @@
 import { Category, Course } from "@prisma/client";
-import CourseCard from "./courseCard";
+import dynamic from "next/dynamic";
 
 type CourseWithProgressWithCategory = Course & {
   category: Category | null;
@@ -10,6 +10,8 @@ type CourseWithProgressWithCategory = Course & {
 interface CoursesListProps {
   items: CourseWithProgressWithCategory[];
 }
+
+const CourseCard = dynamic(() => import("./courseCard"))
 
 const CoursesList = ({ items }: CoursesListProps) => {
   return (

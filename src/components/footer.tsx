@@ -13,9 +13,9 @@ const Footer = () => {
         <div className="flex flex-col items-center">
           <Avatar className="h-28 w-28 mb-1">
             <AvatarImage src="/Hero.jpg" alt="founder"/>
-            <AvatarFallback>Our Founder</AvatarFallback>
+            <AvatarFallback>Founder</AvatarFallback>
           </Avatar>
-          <h4 className="font-bold text-sm text-slate-700">Our Founder</h4>
+          <h4 className="font-bold text-sm text-slate-700">Founder</h4>
           <span className="font-normal text-base">Suvrajit Mondal</span>
         </div>
       </div>
