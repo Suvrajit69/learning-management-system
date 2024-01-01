@@ -1,6 +1,8 @@
 import Sidebar from "./_components/sidebar";
 import Navbar from "./_components/navbar";
-import Footer from "@/components/footer";
+import dynamic from "next/dynamic";
+
+const Footer = dynamic(() => import("@/components/footer"))
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
