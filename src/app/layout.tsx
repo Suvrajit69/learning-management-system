@@ -8,7 +8,7 @@ import ConfettiProvider from "@/components/providers/confettiProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "CoursesLala ~ courses that make you dance like lala",
+  title: "CoursesLala ~ courses that makes you dance like lala",
   description: "Learn from best courses and you can sell your courses also!",
 };
 

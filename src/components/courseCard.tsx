@@ -52,9 +52,9 @@ const CourseCard = async ({
       <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg p-3  h-full">
         <div className="relative w-full aspect-video rounded-md overflow-hidden">
           <Image
-            fill
-            className="aspect-square"
-            sizes="(min-width: 808px) 50vw, 100vw"
+            fill={true}
+            className="object-center"
+            sizes="(min-width: 1280px) calc(25vw - 106px), (min-width: 780px) calc(50vw - 170px), (min-width: 640px) calc(50vw - 58px), calc(100vw - 74px)"
             alt={title}
             priority
             src={imageUrl}
