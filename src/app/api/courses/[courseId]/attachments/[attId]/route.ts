@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { utapi } from "@/app/api/uploadthing/core";
-
+export const runtime = 'edge';
 export async function DELETE(
   req: Request,
   { params }: { params: { courseId: string; attId: string } }

@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { utapi } from "../../uploadthing/core";
-
+export const runtime = 'edge';
 export async function PATCH(
   req: Request,
   { params }: { params: { courseId: string } }

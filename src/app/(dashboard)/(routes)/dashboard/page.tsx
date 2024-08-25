@@ -4,7 +4,7 @@ import { getDashboardCourses } from "../../../../../actions/getDashboardCourses"
 import CoursesList from "@/components/coursesList";
 import { CheckCircle, Clock } from "lucide-react";
 import InfoCard from "./_components/infoCard";
-
+export const runtime = 'edge';
 export default async function Dashboard() {
   const { userId } = auth();
 

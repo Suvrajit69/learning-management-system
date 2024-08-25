@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UTApi } from "uploadthing/server";
-
+export const runtime = 'edge';
 const f = createUploadthing();
 export const utapi = new UTApi();
 

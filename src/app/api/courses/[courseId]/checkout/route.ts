@@ -3,7 +3,7 @@ import { stripe } from "@/lib/stripe";
 import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-
+export const runtime = 'edge';
 export async function POST(
   req: Request,
   { params }: { params: { courseId: string } }

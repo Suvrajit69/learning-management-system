@@ -10,7 +10,7 @@ import { File } from "lucide-react";
 import CourseProgressBtn from "./_components/courseProgressBtn";
 import CourseRatingBtn from "./_components/courseRatingBtn";
 import { db } from "@/lib/db";
-
+export const runtime = 'edge';
 const ChapterIdPage = async ({
   params,
 }: {

@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { getAnalytics } from "../../../../../../actions/getAnalytics";
 import DataCard from "./_components/dataCard";
 import Chart from "../../dashboard/_components/chart";
-
+export const runtime = 'edge';
 const AnalyticsPage = async () => {
   const { userId } = auth();
 

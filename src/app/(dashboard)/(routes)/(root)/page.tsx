@@ -4,7 +4,7 @@ import SearchInput from "@/components/searchInput";
 import { getCourses } from "../../../../../actions/getCourses";
 import { auth } from "@clerk/nextjs";
 import CoursesList from "@/components/coursesList";
-
+export const runtime = 'edge';
 interface SearchPageProps {
   searchParams: {
     title: string;

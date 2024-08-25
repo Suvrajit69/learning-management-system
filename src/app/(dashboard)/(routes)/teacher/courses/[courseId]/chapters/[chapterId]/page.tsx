@@ -10,7 +10,7 @@ import ChapterAccessForm from "./_components/chapterAcessForm";
 import ChapterVideoForm from "./_components/chapterVideoForm";
 import Banner from "@/components/banner";
 import ChapterActions from "./_components/chapterActions";
-
+export const runtime = 'edge';
 const ChapterIdPage = async ({
   params,
 }: {

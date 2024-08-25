@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
-
+export const runtime = 'edge';
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const course = await db.course.findUnique({
     where: {

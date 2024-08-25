@@ -3,7 +3,7 @@ import { columns } from "./_components/columns";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
-
+export const runtime = 'edge';
 const CoursesPage = async () => {
   const { userId } = auth();
 

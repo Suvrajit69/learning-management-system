@@ -18,7 +18,7 @@ import AttachmentForm from "./_components/attachmentForm";
 import ChapterForm from "./_components/chapterForm";
 import Banner from "@/components/banner";
 import CourseAction from "./_components/courseActions";
-
+export const runtime = 'edge';
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = auth();
   if (!userId) return redirect("/");
